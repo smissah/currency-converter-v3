@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import RatesSelect from "./components/RatesSelect";
 
-function App() {
+const App = () => {
+  const [currencies, setCurrencies] = useState([]);
+
+  useEffect(() => {
+    const getCurrencies = async () => {
+      const currenciesFromApi = await fetchCurrencies();
+      setCurrencies(currenciesFromApi);
+    };
+    getCurrencies();
+  }, []);
+
+  const fetchCurrencies = async () => {
+    const url = "https://api.exchangeratesapi.io/latest?base=GBP";
+
+    const result = await fetch(url);
+    const data = await result.json();
+    console.log(data);
+    return data;
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Currency Convertor</h1>
+      {currencies.length > 0 && <RatesSelect rates={currencies} />}
     </div>
   );
-}
+};
 
 export default App;
