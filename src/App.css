@@ -1,0 +1,22 @@
+/* colors */
+:root {
+  --clrBackground: rgb(206, 205, 205);
+}
+
+body {
+  background: var(--clrBackground);
+  position: relative;
+}
+
+.container {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+input[type="number"] {
+  color: red;
+  width: 30px;
+  height: 12px;
+}

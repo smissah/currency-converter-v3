@@ -6,7 +6,7 @@ const App = () => {
   const [currencies, setCurrencies] = useState([]);
   const [rate, setRate] = useState();
   const [enteredNumber, setEnteredNumber] = useState();
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState(0);
 
   const handleCurrencyPick = (currency) => {
     setRate(currency);
@@ -14,15 +14,25 @@ const App = () => {
   };
 
   const handleResult = () => {
-    const result = enteredNumber * rate;
-    console.log(result);
-    setResult(result);
+    const resultsCalculated = parseFloat(enteredNumber * rate).toFixed(3);
+    // if (typeof resultsCalculated === "number") {
+    //   setResult(resultsCalculated);
+    // } else if (typeof resultsCalculated === "string") {
+    //   setResult("--");
+    // }
+
+    setResult(resultsCalculated);
   };
 
-  useEffect(() => {
-    handleResult();
-    console.log("test");
-  }, [rate]);
+  useEffect(
+    () => {
+      handleResult();
+      console.log("useEffect ran");
+      console.log(result);
+    },
+    [rate],
+    [enteredNumber]
+  );
 
   useEffect(() => {
     const getCurrencies = async () => {
@@ -43,8 +53,8 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h1>Currency Convertor</h1>
+    <div className="container">
+      <h1 className="title">Currency Convertor</h1>
       {currencies.length <= 0 ? (
         <h1 className="loading"> Loading</h1>
       ) : (
@@ -65,7 +75,7 @@ const App = () => {
         }}
       />
       <div className="results">
-        {typeof result === "number" ? <h3>{result}</h3> : "sds"}
+        <h2>{result}</h2>
       </div>
     </div>
   );
