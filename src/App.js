@@ -51,6 +51,15 @@ const App = () => {
     <>
       <h1 className="title">Currency Convertor</h1>
       <div className="container">
+        <input
+          className="inputNumber"
+          type="number"
+          placeholder="Enter an amount here"
+          onChange={(e) => {
+            setEnteredNumber(e.target.value);
+            // handleResult();
+          }}
+        />
         {currencies.length <= 0 ? (
           <h1 className="loading"> Loading</h1>
         ) : (
@@ -59,17 +68,6 @@ const App = () => {
             handleCurrencyPick={handleCurrencyPick}
           />
         )}
-        <div className="inputNumber">
-          £
-          <input
-            type="number"
-            maxLength="2"
-            onChange={(e) => {
-              setEnteredNumber(e.target.value);
-              // handleResult();
-            }}
-          />
-        </div>
 
         <div className="results">
           <h2>{result}</h2>
