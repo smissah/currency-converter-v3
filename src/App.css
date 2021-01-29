@@ -20,11 +20,11 @@
   background-color: var(--darkGrey);
   margin: 0 1rem;
   border: none;
-  /* min-width: 200px; */
   padding: 0 1rem;
   font-weight: bold;
   overflow: hidden;
   font-size: 1.6rem;
+  color: var(--clrMain);
 }
 
 .inputNumber {
@@ -33,7 +33,7 @@
 }
 input[type="number"] {
   bottom: 0;
-  color: #000;
+
   right: 0;
   border: none;
   outline: none;
@@ -50,6 +50,7 @@ input[type="number"] {
   height: 100%;
   padding: 0 1rem;
   font-weight: bold;
+  color: var(--clrMain);
 }
 
 body {
