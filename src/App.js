@@ -5,8 +5,8 @@ import "./App.css";
 const App = () => {
   const [currencies, setCurrencies] = useState([]);
   const [rate, setRate] = useState();
-  const [enteredNumber, setEnteredNumber] = useState();
-  const [result, setResult] = useState(0);
+  const [enteredNumber, setEnteredNumber] = useState(0);
+  const [result, setResult] = useState("-");
 
   const handleCurrencyPick = (currency) => {
     setRate(currency);
@@ -15,19 +15,19 @@ const App = () => {
 
   const handleResult = () => {
     const resultsCalculated = parseFloat(enteredNumber * rate).toFixed(3);
-    if (typeof resultsCalculated === "NaN") {
-      setResult("-");
-    } else {
-      setResult(resultsCalculated);
-    }
-    // }
+
+    setResult(resultsCalculated);
   };
 
   useEffect(() => {
-    handleResult();
+    if (rate && enteredNumber) {
+      handleResult();
+    }
+    // handleResult();
     console.log("useEffect ran");
     console.log(result);
-  }, [[rate], [enteredNumber]]);
+    return;
+  });
 
   useEffect(() => {
     const getCurrencies = async () => {
@@ -55,22 +55,22 @@ const App = () => {
           <h1 className="loading"> Loading</h1>
         ) : (
           <RatesSelect
-            className="select"
             rates={currencies}
             handleCurrencyPick={handleCurrencyPick}
           />
         )}
+        <div className="inputNumber">
+          £
+          <input
+            type="number"
+            maxLength="2"
+            onChange={(e) => {
+              setEnteredNumber(e.target.value);
+              // handleResult();
+            }}
+          />
+        </div>
 
-        <input
-          type="number"
-          onChange={(e) => {
-            // if (typeof e.target.value === "number") {
-            //   alert("Number!!");
-            // }
-            setEnteredNumber(e.target.value);
-            handleResult();
-          }}
-        />
         <div className="results">
           <h2>{result}</h2>
         </div>
