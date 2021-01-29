@@ -15,24 +15,19 @@ const App = () => {
 
   const handleResult = () => {
     const resultsCalculated = parseFloat(enteredNumber * rate).toFixed(3);
-    // if (typeof resultsCalculated === "number") {
-    //   setResult(resultsCalculated);
-    // } else if (typeof resultsCalculated === "string") {
-    //   setResult("--");
+    if (typeof resultsCalculated === "NaN") {
+      setResult("-");
+    } else {
+      setResult(resultsCalculated);
+    }
     // }
-
-    setResult(resultsCalculated);
   };
 
-  useEffect(
-    () => {
-      handleResult();
-      console.log("useEffect ran");
-      console.log(result);
-    },
-    [rate],
-    [enteredNumber]
-  );
+  useEffect(() => {
+    handleResult();
+    console.log("useEffect ran");
+    console.log(result);
+  }, [[rate], [enteredNumber]]);
 
   useEffect(() => {
     const getCurrencies = async () => {
@@ -53,31 +48,34 @@ const App = () => {
   };
 
   return (
-    <div className="container">
+    <>
       <h1 className="title">Currency Convertor</h1>
-      {currencies.length <= 0 ? (
-        <h1 className="loading"> Loading</h1>
-      ) : (
-        <RatesSelect
-          rates={currencies}
-          handleCurrencyPick={handleCurrencyPick}
-        />
-      )}
+      <div className="container">
+        {currencies.length <= 0 ? (
+          <h1 className="loading"> Loading</h1>
+        ) : (
+          <RatesSelect
+            className="select"
+            rates={currencies}
+            handleCurrencyPick={handleCurrencyPick}
+          />
+        )}
 
-      <input
-        type="number"
-        onChange={(e) => {
-          // if (typeof e.target.value === "number") {
-          //   alert("Number!!");
-          // }
-          setEnteredNumber(e.target.value);
-          handleResult();
-        }}
-      />
-      <div className="results">
-        <h2>{result}</h2>
+        <input
+          type="number"
+          onChange={(e) => {
+            // if (typeof e.target.value === "number") {
+            //   alert("Number!!");
+            // }
+            setEnteredNumber(e.target.value);
+            handleResult();
+          }}
+        />
+        <div className="results">
+          <h2>{result}</h2>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
